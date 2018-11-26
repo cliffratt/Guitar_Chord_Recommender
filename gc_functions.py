@@ -32,7 +32,20 @@ def scrape_explore_page(pagenumber, category = 'hitstotal_desc'):
 def build_most_popular():
     frames = []
     for i in range(20):
-        tempdf = scrape_explore_page(i+1)
+        tempdf = scrape_explore_page(i+1, 'hitstotal_desc')
         frames.append(tempdf)
     tempbigtable = pd.concat(frames)
     return tempbigtable
+
+def build_highest_rated():
+    frames = []
+    for i in range(20):
+        tempdf = scrape_explore_page(i+1, 'rating_desc')
+        frames.append(tempdf)
+    tempbigtable = pd.concat(frames)
+    return tempbigtable
+
+def combine_and_remove_duplicates(df1, df2):
+    combotable = pd.concat([df1, df2])
+    cleancombotable = combotable.drop_duplicates(subset = 'tab_url')
+    return cleancombotable
