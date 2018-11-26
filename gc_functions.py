@@ -5,10 +5,10 @@ import json
 import numpy as np
 import pandas as pd
 
-def scrape_explore_page(pagenumber):
+def scrape_explore_page(pagenumber, category = 'hitstotal_desc'):
     """Pagenumber must be from 1 to 20. Returns a pandas dataframe"""
     url = 'https://www.ultimate-guitar.com/explore?'
-    params = {'order': 'hitstotal_desc',
+    params = {'order': category,
               'page': pagenumber,
               'type[]':'Chords'}
     response = requests.get(url, params)
