@@ -28,3 +28,11 @@ def scrape_explore_page(pagenumber):
         templist.append(item)
     tempdf = pd.DataFrame(templist)
     return tempdf
+
+def build_most_popular():
+    frames = []
+    for i in range(20):
+        tempdf = scrape_explore_page(i+1)
+        frames.append(tempdf)
+    tempbigtable = pd.concat(frames)
+    return tempbigtable
