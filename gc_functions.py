@@ -49,3 +49,11 @@ def combine_and_remove_duplicates(df1, df2):
     combotable = pd.concat([df1, df2])
     cleancombotable = combotable.drop_duplicates(subset = 'tab_url')
     return cleancombotable
+
+def launch_spotipy:
+"""Returns an instance of spotipy"""
+    import spotipy
+    from spotipy.oauth2 import SpotifyClientCredentials
+    client_credentials_manager = SpotifyClientCredentials(client_id='ac2725d119934aa8a768254b50954af1', client_secret='42e73e9fc67a4a479b207778eb01d0fc')
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+    return sp
