@@ -4,6 +4,16 @@ import re
 import json
 import numpy as np
 import pandas as pd
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import subjectivity
+from nltk.sentiment.util import *
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from nltk import tokenize
+sid = SentimentIntensityAnalyzer()
+from selenium.webdriver import Firefox
+import random
+import time
+import sys
 
 def scrape_explore_page(pagenumber, category = 'hitstotal_desc'):
     """Pagenumber must be from 1 to 20. Returns a pandas dataframe"""
@@ -57,3 +67,28 @@ def launch_spotipy():
     client_credentials_manager = SpotifyClientCredentials(client_id='ac2725d119934aa8a768254b50954af1', client_secret='42e73e9fc67a4a479b207778eb01d0fc')
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     return sp
+
+def print_sentiments(sentences):
+    """Given a list of sentences, prints sentiment information"""
+    for sentence in sentences:
+    print(sentence)
+    ss = sid.polarity_scores(sentence)
+    for k in sorted(ss):
+        print('{0}: {1}, '.format(k, ss[k]), end='')
+    print()
+
+def extract_user_comments(allcomments):
+    newcommentlist = []
+    for i in range(len(allcomments)):
+        for j in range(len(allcomments[i])):
+            tempcommentlist = []
+            tempstring = allcomments[i][j]
+            splitstring = tempstring.split('\n',3)
+            tempcomment = splitstring[0]
+            newsplitstring = splitstring[2].replace('[a]', '')
+            newsplitstring2 = newsplitstring.replace('  ', ' ')
+            tempuser = newsplitstring2
+            tempcommentlist.append(tempuser)
+            tempcommentlist.append(tempcomment)
+            newcommentlist.append(tempcommentlist)
+    return newcommentlist
