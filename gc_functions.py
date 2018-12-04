@@ -112,3 +112,10 @@ def get_all_comments(urllist):
             comments.append(rawcomments[i].text)
         allcomments.append(comments)
     return allcomments
+
+def get_tab_idxs(user_ratings_df, item_factors_df):
+    tab_idxs = []
+    for tab_id in user_ratings_df['tab']:
+        tab_idx = item_factors_df.index[item_factors_df['id'] == tab_id]
+        tab_idxs.append(tab_idx[0])
+    return np.array(tab_idxs)
