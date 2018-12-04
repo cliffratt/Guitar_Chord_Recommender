@@ -119,3 +119,10 @@ def get_tab_idxs(user_ratings_df, item_factors_df):
         tab_idx = item_factors_df.index[item_factors_df['id'] == tab_id]
         tab_idxs.append(tab_idx[0])
     return np.array(tab_idxs)
+
+def new_user_predict(newuser_factors, item_factor_arr):
+    new_factor_list = []
+    for i in range(len(item_factor_arr)):
+        new_factor_list.append(np.dot(newuser_factors, item_factor_arr[i]))
+    new_user_df = pd.DataFrame([new_factor_list], index=['newuser'])
+    return new_user_df
