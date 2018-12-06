@@ -166,13 +166,13 @@ def get_data(urls, mc):
     browser.close()
 
 def get_comments(url, mc, browser):
-    commentlist = load_commentlist(url)
+    commentlist = load_commentlist(url, mc)
     if commentlist is None:
         commentlist = scrape_comments(url, browser)
         store_commentlist(url,commentlist, mc)
     return commentlist
 
-def load_commentlist(url):
+def load_commentlist(url, mc):
     result = mc['Guitar']['Tabs'].find_one({'url':url[0]})
     if result:
         return result['commentlist']
