@@ -86,19 +86,31 @@ def print_sentiments(sentences):
     print()
 
 def extract_user_comments(allcomments):
+    sid = SentimentIntensityAnalyzer()
     newcommentlist = []
     for i in range(len(allcomments)):
-        for j in range(len(allcomments[i])):
-            tempcommentlist = []
-            tempstring = allcomments[i][j]
-            splitstring = tempstring.split('\n',3)
-            tempcomment = splitstring[0]
-            newsplitstring = splitstring[2].replace('[a]', '')
-            newsplitstring2 = newsplitstring.replace('  ', ' ')
-            tempuser = newsplitstring2
-            tempcommentlist.append(tempuser)
-            tempcommentlist.append(tempcomment)
-            newcommentlist.append(tempcommentlist)
+        namesdict = {}
+        for j in range(len(allcomments[i]['commentlist'])):
+            tempuser = ""
+            tempcounter = 0
+            tempsongname = allcomments[i]['commentlist'][j][1] + ' ' + allcomments[i]['url'][0]
+            tempstring = allcomments[i]['commentlist'][j][0]
+            splitstring = tempstring.split('\n')
+            for k in range(len(splitstring)):
+                if len(splitstring[k])>0:
+                    if ((splitstring[k][0] == '+') or (splitstring[k][0] == '-') or ((splitstring[k][0] == '0') and (len(splitstring[k]) == 1))):
+                        newsplitstring = splitstring[k+1].replace('[a]', '')
+                        newsplitstring2 = newsplitstring.replace('  ', ' ')
+                        tempuser = newsplitstring2
+                        if tempuser not in namesdict:
+                            namesdict[tempuser] = tempuser
+                            tempcommentlist = []
+                            tempcomment = splitstring[0]
+                            tempcommentlist.append(tempuser)
+                            tempcommentlist.append(tempsongname)
+                            ss = sid.polarity_scores(tempcomment)
+                            tempcommentlist.append(ss['compound'])
+                            newcommentlist.append(tempcommentlist)
     return newcommentlist
 
 def get_all_comments(urllist):
@@ -204,3 +216,24 @@ def get_keys():
     with open('spotifyclientsecret.txt', 'r') as myfile3:
         myclientsecret = myfile3.read().replace('\n', '')
     return mongostring, myclientid, myclientsecret
+
+def download_mongodb(mc):
+    mydb = list(mc['Guitar']['Tabs'].find())
+    return mydb
+
+def assign_id_numbers(ratingsdb):
+    usersdict = {}
+    tabsdict = {}
+    i = 200001
+    for item in ratingsdb['user']:
+        if item not in usersdict:
+            usersdict[item] = str(i)
+            i +=1
+    i = 313000
+    for item in ratingsdb['tab']:
+        if item not in tabsdict:
+            tabsdict[item] = str(i)
+            i +=1
+    numratingsdf = ratingsdf.replace({"user": usersdict})
+    numratingsdf2 = numratingsdf.replace({"tab": tabsdict})
+    return numratingsdf2
