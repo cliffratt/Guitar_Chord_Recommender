@@ -126,3 +126,7 @@ def new_user_predict(newuser_factors, item_factor_arr):
         new_factor_list.append(np.dot(newuser_factors, item_factor_arr[i]))
     new_user_df = pd.DataFrame([new_factor_list], index=['newuser'])
     return new_user_df
+
+def check_db_size():
+    raw_bunch_list = list(mc['Guitar']['Tabs'].find())
+    return len(raw_bunch_list)
