@@ -79,8 +79,8 @@ def launch_spotipy():
 def print_sentiments(sentences):
     """Given a list of sentences, prints sentiment information"""
     for sentence in sentences:
-    print(sentence)
-    ss = sid.polarity_scores(sentence)
+        print(sentence)
+        ss = sid.polarity_scores(sentence)
     for k in sorted(ss):
         print('{0}: {1}, '.format(k, ss[k]), end='')
     print()
@@ -113,7 +113,6 @@ def get_all_comments(urllist):
         button = browser.find_element_by_css_selector('._39WCv > button:nth-child(1)')
         button.click()
         sleep(10,15)
-        #html = browser.page_source
         rawcomments = browser.find_elements_by_class_name('_300X0')
         comments = []
         for i in range(len(rawcomments)):
@@ -204,3 +203,4 @@ def get_keys():
         myclientid = myfile.read().replace('\n', '')
     with open('spotifyclientsecret.txt', 'r') as myfile3:
         myclientsecret = myfile.read().replace('\n', '')
+    return mongostring, myclientid, myclientsecret
