@@ -4,6 +4,12 @@ import re
 import json
 import numpy as np
 import pandas as pd
+import zipfile
+import sys
+import requests
+import nltk
+from nltk.sentiment import SentimentAnalyzer
+sa = SentimentAnalyzer()
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import subjectivity
 from nltk.sentiment.util import *
@@ -13,7 +19,9 @@ sid = SentimentIntensityAnalyzer()
 from selenium.webdriver import Firefox
 import random
 import time
-import sys
+import warnings
+import pymongo
+from selenium.common.exceptions import TimeoutException
 
 def scrape_explore_page(pagenumber, category = 'hitstotal_desc'):
     """Pagenumber must be from 1 to 20. Returns a pandas dataframe"""
