@@ -68,7 +68,7 @@ def combine_and_remove_duplicates(df1, df2):
     cleancombotable = combotable.drop_duplicates(subset = 'tab_url')
     return cleancombotable
 
-def launch_spotipy():
+def launch_spotipy(myclientid, myclientsecret):
     """Returns an instance of spotipy"""
     import spotipy
     from spotipy.oauth2 import SpotifyClientCredentials
@@ -134,7 +134,7 @@ def new_user_predict(newuser_factors, item_factor_arr):
     new_user_df = pd.DataFrame([new_factor_list], index=['newuser'])
     return new_user_df
 
-def check_db_size():
+def check_db_size(mc):
     raw_bunch_list = list(mc['Guitar']['Tabs'].find())
     return len(raw_bunch_list)
 
@@ -200,7 +200,7 @@ def get_keys():
     with open('mongokey.txt', 'r') as myfile:
         mongostring = myfile.read().replace('\n', '')
     with open('spotifyclientid.txt', 'r') as myfile2:
-        myclientid = myfile.read().replace('\n', '')
+        myclientid = myfile2.read().replace('\n', '')
     with open('spotifyclientsecret.txt', 'r') as myfile3:
-        myclientsecret = myfile.read().replace('\n', '')
+        myclientsecret = myfile3.read().replace('\n', '')
     return mongostring, myclientid, myclientsecret
