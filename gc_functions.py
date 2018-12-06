@@ -141,3 +141,27 @@ def check_db_size():
 
 def sleep(start=5, end=15):
   return time.sleep(random.randint(5, 15))
+
+def make_url_list(combinedtable):
+    sitelist = list(combinedtable['tab_url'])
+    songlist = list(combinedtable['song_name'])
+    urllist = []
+    for i in range(len(sitelist)):
+        templist = []
+        templist.append(sitelist[i])
+        templist.append(songlist[i])
+        urllist.append(templist)
+    return urllist
+
+def get_data(urls, mc):
+    browser = Firefox(timeout = 45)
+    for url in urls:
+        try:
+            commentlist = get_comments(url, mc, browser)
+        except TimeoutException as e:
+            warnings.warn(f"url: {url}\n{repr(e)}")
+            continue
+        except Exception as e:
+            warnings.warn(f"url: {url}\n{repr(e)}")
+            continue
+    browser.close()
