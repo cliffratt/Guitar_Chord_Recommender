@@ -72,7 +72,7 @@ def launch_spotipy():
     """Returns an instance of spotipy"""
     import spotipy
     from spotipy.oauth2 import SpotifyClientCredentials
-    client_credentials_manager = SpotifyClientCredentials(client_id='ac2725d119934aa8a768254b50954af1', client_secret='42e73e9fc67a4a479b207778eb01d0fc')
+    client_credentials_manager = SpotifyClientCredentials(client_id=myclientid, client_secret=myclientsecret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     return sp
 
@@ -196,3 +196,11 @@ def scrape_comments(url, browser):
     for j in range(len(rawcomments)):
         comments.append([rawcomments[j].text, url[1]])
     return comments
+
+def get_keys():
+    with open('mongokey.txt', 'r') as myfile:
+        mongostring = myfile.read().replace('\n', '')
+    with open('spotifyclientid.txt', 'r') as myfile2:
+        myclientid = myfile.read().replace('\n', '')
+    with open('spotifyclientsecret.txt', 'r') as myfile3:
+        myclientsecret = myfile.read().replace('\n', '')
