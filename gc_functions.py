@@ -130,3 +130,6 @@ def new_user_predict(newuser_factors, item_factor_arr):
 def check_db_size():
     raw_bunch_list = list(mc['Guitar']['Tabs'].find())
     return len(raw_bunch_list)
+
+def sleep(start=5, end=15):
+  return time.sleep(random.randint(5, 15))
