@@ -172,3 +172,8 @@ def get_comments(url, mc, browser):
         commentlist = scrape_comments(url, browser)
         store_commentlist(url,commentlist, mc)
     return commentlist
+
+def load_commentlist(url):
+    result = mc['Guitar']['Tabs'].find_one({'url':url[0]})
+    if result:
+        return result['commentlist']
