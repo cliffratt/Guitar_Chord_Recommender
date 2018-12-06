@@ -177,3 +177,22 @@ def load_commentlist(url):
     result = mc['Guitar']['Tabs'].find_one({'url':url[0]})
     if result:
         return result['commentlist']
+
+def store_commentlist(url, commentlist, mc):
+    mc['Guitar']['Tabs'].delete_many({'url':url})
+    mc['Guitar']['Tabs'].insert_one({'commentlist':commentlist,'url':url})
+
+def scrape_comments(url, browser):
+    browser.get(url[0])
+    sleep(5,10)
+    bottomofpage = browser.find_element_by_css_selector('a._3FEu1 > span:nth-child(1) > span:nth-child(1)')
+    bottomofpage.location_once_scrolled_into_view
+    sleep(5,10)
+    button = browser.find_element_by_css_selector('._39WCv > button:nth-child(1)')
+    button.click()
+    sleep(10,15)
+    rawcomments = browser.find_elements_by_class_name('_300X0')
+    comments = []
+    for j in range(len(rawcomments)):
+        comments.append([rawcomments[j].text, url[1]])
+    return comments
