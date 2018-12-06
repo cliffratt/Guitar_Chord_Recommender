@@ -165,3 +165,10 @@ def get_data(urls, mc):
             warnings.warn(f"url: {url}\n{repr(e)}")
             continue
     browser.close()
+
+def get_comments(url, mc, browser):
+    commentlist = load_commentlist(url)
+    if commentlist is None:
+        commentlist = scrape_comments(url, browser)
+        store_commentlist(url,commentlist, mc)
+    return commentlist
