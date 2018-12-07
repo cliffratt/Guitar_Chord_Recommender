@@ -113,25 +113,6 @@ def extract_user_comments(allcomments):
                             newcommentlist.append(tempcommentlist)
     return newcommentlist
 
-def get_all_comments(urllist):
-    browser = Firefox()
-    allcomments = []
-    for url in urllist:
-        browser.get(url)
-        sleep(10,15)
-        bottomofpage = browser.find_element_by_css_selector('a._3FEu1 > span:nth-child(1) > span:nth-child(1)')
-        bottomofpage.location_once_scrolled_into_view
-        sleep(10,15)
-        button = browser.find_element_by_css_selector('._39WCv > button:nth-child(1)')
-        button.click()
-        sleep(10,15)
-        rawcomments = browser.find_elements_by_class_name('_300X0')
-        comments = []
-        for i in range(len(rawcomments)):
-            comments.append(rawcomments[i].text)
-        allcomments.append(comments)
-    return allcomments
-
 def get_tab_idxs(user_ratings_df, item_factors_df):
     tab_idxs = []
     for tab_id in user_ratings_df['tab']:
@@ -221,16 +202,16 @@ def download_mongodb(mc):
     mydb = list(mc['Guitar']['Tabs'].find())
     return mydb
 
-def assign_id_numbers(ratingsdb):
+def assign_id_numbers(ratingsdf):
     usersdict = {}
     tabsdict = {}
     i = 200001
-    for item in ratingsdb['user']:
+    for item in ratingsdf['user']:
         if item not in usersdict:
             usersdict[item] = str(i)
             i +=1
     i = 313000
-    for item in ratingsdb['tab']:
+    for item in ratingsdf['tab']:
         if item not in tabsdict:
             tabsdict[item] = str(i)
             i +=1
