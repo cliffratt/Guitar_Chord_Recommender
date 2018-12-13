@@ -1,2 +1,2 @@
-# Guitar_Chord_Recommender
-Guitar Chord Recommender
+# Guitar_Tab_Recommender
+Guitar Tab Recommender
