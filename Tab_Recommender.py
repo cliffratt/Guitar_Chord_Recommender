@@ -139,7 +139,7 @@ def selection_screen(name):
 
 def survey_screen(name):
     usergenrepicks = []
-    with open('top63genres.pkl', 'rb') as handle:
+    with open('data/top63genres.pkl', 'rb') as handle:
         top63genres = pickle.load(handle)
     selection = ""
     templength = len(top63genres)
@@ -202,7 +202,7 @@ def pick_songs_you_like(name, usergenrepicks):
     selection = ""
     itemidxs = []
     usersongpicks = []
-    combinedtable = pd.read_pickle('combinedtable.pkl')
+    combinedtable = pd.read_pickle('data/combinedtable.pkl')
     possiblesongs = []
     i = 0
     for item in combinedtable['genre']:
@@ -265,9 +265,9 @@ def pick_songs_you_like(name, usergenrepicks):
     return selection
 
 def recommendations_page(name, usersongpicks, itemidxs):
-    combinedtable = pd.read_pickle('combinedtable.pkl')
+    combinedtable = pd.read_pickle('data/combinedtable.pkl')
     recommendations = []
-    item_factors_df2 = pd.read_pickle('item_factors_df2.pkl')
+    item_factors_df2 = pd.read_pickle('data/item_factors_df2.pkl')
     item_factors_arr = np.array(item_factors_df2['features'].tolist())
     selection = ""
     tabidxs = np.array(itemidxs)
@@ -318,7 +318,7 @@ def recommendations_page(name, usersongpicks, itemidxs):
     return selection
 
 def display_tab_info(name, choice, recommendations):
-    combinedtable = pd.read_pickle('combinedtable.pkl')
+    combinedtable = pd.read_pickle('data/combinedtable.pkl')
     selection = ""
     myint = int(choice)
     while selection!= '0':
@@ -367,7 +367,7 @@ def display_tab_info(name, choice, recommendations):
     return selection
 
 def display_random(name):
-    combinedtable = pd.read_pickle('combinedtable.pkl')
+    combinedtable = pd.read_pickle('data/combinedtable.pkl')
     selection = ""
     while selection!= '0':
         myint = randint(0, 932)
@@ -413,8 +413,8 @@ def display_random(name):
     return selection
 
 def showtop10(name):
-    combinedtable = pd.read_pickle('combinedtable.pkl')
-    with open('top63genres.pkl', 'rb') as handle:
+    combinedtable = pd.read_pickle('data/combinedtable.pkl')
+    with open('data/top63genres.pkl', 'rb') as handle:
         top63genres = pickle.load(handle)
     cls()
     print("=========================================")
