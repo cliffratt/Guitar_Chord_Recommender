@@ -297,7 +297,7 @@ def recommendations_page(name, usersongpicks, itemidxs):
         print("Recommendations left: " + str(len(recommendations)))
         print("")
         for i in range(20):
-            print(str(i+1) + ": " + str(combinedtable['song_name'].iloc[(int(recommendations[i][1]))]))
+            print(str(i+1) + ": " + str(combinedtable['song_name'].iloc[(int(recommendations[i][1]))]) + " by " + str(combinedtable['artist_name'].iloc[(int(recommendations[i][1]))]))
         print()
         print()
         print()
@@ -360,10 +360,13 @@ def display_tab_info(name, choice, recommendations):
         print()
         print()
         print()
-        print()
+        print('111. Open Tab URL in a Firefox Browser')
         print('0. Back To Recommendations Page')
         print()
         selection = input(f"Hello {name}. What is your selection? ==>  ")
+        if (selection == '111'):
+            browser = Firefox(timeout = 45)
+            browser.get(str(combinedtable['tab_url'].iloc[(int(recommendations[myint-1][1]))]))
     return selection
 
 def display_random(name):
